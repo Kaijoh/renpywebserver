@@ -1,0 +1,56 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Score</title>
+</head>
+<body>
+    {% if scores %}
+        <h2>Top Scores</h2>
+        <ol>
+        {% for score in player_score %}
+            <li>{{ score.player_name }} - {{ score.player_score }}</li>
+        {% endfor %}
+        </ol>
+    {% else %}
+        <h2>No Scores Yet</h2>
+    {% endif %}
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Submit Score</title>
+</head>
+<body>
+	<h1>Submit Score</h1>
+	<form method="post">
+		{% csrf_token %}
+		<label for="name">Name:</label>
+		<input type="text" name="player_name" id="name">
+		<label for="score">Score:</label>
+		<input type="number" name="player_score" id="score">
+		<input type="submit" value="Submit">
+	</form>
+
+	<hr>
+
+	<h1>Top Scores</h1>
+    {% csrf_token %}
+    
+	{% if scores %}
+		<ul>
+		{% for score in player_score %}
+			<li>{{ score.player_name }} - {{ score.player_score }}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No scores yet.</p>
+	{% endif %}
+</body>
+</html>
