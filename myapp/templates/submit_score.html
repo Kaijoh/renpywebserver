@@ -42,7 +42,7 @@
 
 	<h1>Top Scores</h1>
     {% csrf_token %}
-    
+
 	{% if scores %}
 		<ul>
 		{% for score in player_score %}

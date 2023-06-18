@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Score
+from .models import Score, Score2, Score3
+
 import json
 import requests
 
@@ -13,25 +14,68 @@ logger.info('submit_score called')
 @csrf_exempt
 def submit_score(request):
     if request.method == 'POST':
-        player_name = request.POST['player_name']
-        player_score = request.POST['player_score']
+        player_name = request.POST.get('player_name')
+        player_score = int(request.POST.get('player_score'))
+        player_score2 = int(request.POST.get('player_score2'))
+        player_score3 = int(request.POST.get('player_score3'))
 
-        score = Score.objects.create(player_name=player_name, player_score=player_score)
-        score.save()
+        score_entry = Score(player_name=player_name, player_score=player_score)
+        score_entry.save()
 
-        return JsonResponse({'status': 'success'})
+        score2_entry = Score2(player_name=player_name, player_score2=player_score2)
+        score2_entry.save()
+
+        score3_entry = Score3(player_name=player_name, player_score3=player_score3)
+        score3_entry.save()
+
+        return HttpResponse(status=200)
     else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+        return HttpResponse(status=400)
     
+# @csrf_exempt
+# def submit_score(request):
+#     if request.method == 'POST':
+#         player_name = request.POST.get('player_name')
+#         player_score = request.POST.get('player_score')
+
+#         if player_name is None:
+#             return JsonResponse({'status': 'error', 'message': 'Player name not found in request.'})
+#         elif player_score is None:
+#             return JsonResponse({'status': 'error', 'message': 'Player score not found in request.'})
+#         else:
+#             score = Score.objects.create(player_name=player_name, player_score=player_score)
+#             score.save()
+
+#             return JsonResponse({'status': 'success'})
+#     else:
+#         return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
 # @csrf_exempt
 # def score_board(request):
 #     player_score = Score.objects.order_by('-player_score')
 #     return render(request, 'score_board.html', {'player_score': player_score})
                                                                   
+# @csrf_exempt
+# def score_board(request):
+#     player_score = Score.objects.order_by('-player_score').values('player_name', 'player_score')
+#     player_score2 = Score2.objects.order_by('-player_score2').values('player_name', 'player_score2')
+#     player_score3 = Score3.objects.order_by('-player_score3').values('player_name', 'player_score3')
+#     context = {
+#         'player_score': player_score,
+#         'player_score2': player_score2,
+#         'player_score3': player_score3
+#     }
+#     return render(request, 'score_board.html', context)
 @csrf_exempt
 def score_board(request):
-    player_score = Score.objects.order_by('-player_score').values('player_name', 'player_score')
-    return render(request, 'score_board.html', {'player_score': player_score})
+    player_scores = {}
+    player_scores['easy'] = list(Score.objects.order_by('-player_score').values('player_name', 'player_score'))
+    player_scores['medium'] = list(Score2.objects.order_by('-player_score2').values('player_name', 'player_score2'))
+    player_scores['hard'] = list(Score3.objects.order_by('-player_score3').values('player_name', 'player_score3'))
+    context = {
+        'player_scores': player_scores
+    }
+    return render(request, 'score_board.html', context)
 
 
 

@@ -2,18 +2,406 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Leaderboard</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  {% csrf_token %}
-  {% for score in player_score %}
-    <p>Name: {{ score.player_name }}, Score: {{ score.player_score }}</p>
-  {% empty %}
-    <p>No scores yet.</p>
-  {% endfor %}
-  
+    <style>
+        body {
+            background-color: #0A0A0A;
+        }
+    
+        .container-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0px;
+            margin: 50px auto;
+            max-width: 2000px;
+        }
+    
+        .container {
+            background-color: #1D1D1D;
+            border: 1px solid #313131;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            overflow: hidden;
+            margin: 0 30px 0 30px;
+        }
+    
+        .container h1, .container h2 {
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #FFFFFF;
+            text-shadow: 0 1px 0 #000000;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+    
+        .container table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+        }
+    
+        .container table thead {
+            background-color: #313131;
+        }
+    
+        .container table thead th {
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #FFFFFF;
+            font-size: 24px;
+            text-shadow: 0 1px 0 #000000;
+            border-bottom: 1px solid #000000;
+            border-top: 1px solid #000000;
+        }
+    
+        .container table tbody tr:nth-child(even) {
+            background-color: #262626;
+        }
+    
+        .container table tbody tr:hover {
+            background-color: #424242;
+        }
+    
+        .container table td {
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #FFFFFF;
+            text-shadow: 0 1px 0 #000000;
+            border-bottom: 1px solid #313131;
+        }
+    
+        .container table td:first-child {
+            font-size: 24px;
+            font-weight: bold;
+            color: #EAC800;
+            text-shadow: 0 1px 0 #000000;
+        }
+    
+        .container table td:nth-child(2) {
+            text-align: left;
+        }
+    
+        .container table td.trophy {
+            color: #EAC800;
+        }
+    
+        .container table td.trophy i {
+            font-size: 32px;
+        }
+    
+        .container table td.trophy-gold i {
+            color: gold;
+        }
+    
+        .container table td.trophy-silver i {
+            color: silver;
+        }
+    
+        .container table td.trophy-bronze i {
+            color: #cd7f32;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .share-button {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+        
+        .share-button i {
+            transition: color 0.3s ease;
+        }
+        
+        .share-button:hover i {
+            color: gold;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div class="container">
+        <h1>Leaderboards</h1>
+        <h2>The Lost Pages</h2>
+    </div>
+    <div class="container-wrapper">
+
+        <div class="container">
+            <h1>EASY</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if player_scores.easy %}
+                        {% for score in player_scores.easy %}
+                            <tr>
+                                <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                                    {% if forloop.counter <= 3 %}
+                                        <i class="fa fa-trophy"></i>
+                                    {% else %}
+                                        {{ forloop.counter }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ score.player_name }}</td>
+                                <td>{{ score.player_score }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No scores yet.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                <td>
+                    <div class="share-buttons">
+                        <a class="share-button" href="https://twitter.com/intent/tweet?text=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20&hashtags=TheLostPages" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="share-button" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com&amp;quote=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20My%20score%20is%2075%20out%20of%2080.%20Can%20you%20beat%20it%3F" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="share-button" href="https://www.instagram.com" target="_blank">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </td>                               
+            </table>
+        </div>
+
+        <div class="container">
+            <h1>MEDIUM</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if player_scores.medium %}
+                        {% for score in player_scores.medium %}
+                            <tr>
+                                <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                                    {% if forloop.counter <= 3 %}
+                                        <i class="fa fa-trophy"></i>
+                                    {% else %}
+                                        {{ forloop.counter }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ score.player_name }}</td>
+                                <td>{{ score.player_score2 }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No scores yet.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                <td>
+                    <div class="share-buttons">
+                        <a class="share-button" href="https://twitter.com/intent/tweet?text=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20&hashtags=TheLostPages" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="share-button" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com&amp;quote=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20My%20score%20is%2075%20out%20of%2080.%20Can%20you%20beat%20it%3F" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="share-button" href="https://www.instagram.com" target="_blank">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </td>  
+            </table>
+        </div>
+        
+        <div class="container">
+            <h1>HARD</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if player_scores.hard %}
+                        {% for score in player_scores.hard %}
+                            <tr>
+                                <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                                    {% if forloop.counter <= 3 %}
+                                        <i class="fa fa-trophy"></i>
+                                    {% else %}
+                                        {{ forloop.counter }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ score.player_name }}</td>
+                                <td>{{ score.player_score3 }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">No scores yet.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                <td>
+                    <div class="share-buttons">
+                        <a class="share-button" href="https://twitter.com/intent/tweet?text=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20&hashtags=TheLostPages" target="_blank">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a class="share-button" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com&amp;quote=I%20just%20scored%2075%20on%20the%20EASY%20level%20of%20The%20Lost%20Pages!%20Try%20to%20beat%20me!%20My%20score%20is%2075%20out%20of%2080.%20Can%20you%20beat%20it%3F" target="_blank">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a class="share-button" href="https://www.instagram.com" target="_blank">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </td>  
+            </table>
+        </div>
+    </div>
 </body>
+
+<!-- <body>
+    <div class="container">
+        <h1>Leaderboards</h1>
+        <h2>The Lost Pages</h2>
+  </div>
+    <div class="container">
+        <h1>EASY</h1>
+        <table>
+            <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player Name</th>
+                  <th>Score</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% if player_score %}
+                {% for score in player_score %}
+                    <tr>
+                        <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                          {% if forloop.counter == 1 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 2 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 3 %}
+                            <i class="fa fa-trophy"></i>
+                          {% else %}
+                            {{ forloop.counter }}
+                          {% endif %}
+                        </td>
+                        <td>{{ score.player_name }}</td>
+                        <td>{{ score.player_score }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No scores yet.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+      </table>
+  </div>
+
+    <div class="container">
+        <h1>MEDIUM</h1>
+        <table>
+            <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player Name</th>
+                  <th>Score</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% if player_score2 %}
+                {% for score in player_score2 %}
+                    <tr>
+                        <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                          {% if forloop.counter == 1 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 2 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 3 %}
+                            <i class="fa fa-trophy"></i>
+                          {% else %}
+                            {{ forloop.counter }}
+                          {% endif %}
+                        </td>
+                        <td>{{ score.player_name }}</td>
+                        <td>{{ score.player_score2 }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No scores yet.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+      </table>
+  </div>
+
+    <div class="container">
+        <h1>HARD</h1>
+        <table>
+            <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player Name</th>
+                  <th>Score</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% if player_score3 %}
+                {% for score in player_score3 %}
+                    <tr>
+                        <td{% if forloop.counter == 1 %} class="trophy trophy-gold"{% elif forloop.counter == 2 %} class="trophy trophy-silver"{% elif forloop.counter == 3 %} class="trophy trophy-bronze"{% endif %}>
+                          {% if forloop.counter == 1 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 2 %}
+                            <i class="fa fa-trophy"></i>
+                          {% elif forloop.counter == 3 %}
+                            <i class="fa fa-trophy"></i>
+                          {% else %}
+                            {{ forloop.counter }}
+                          {% endif %}
+                        </td>
+                        <td>{{ score.player_name }}</td>
+                        <td>{{ score.player_score3 }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No scores yet.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+      </table>
+  </div>
+</body>   -->
 </html>
