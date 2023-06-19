@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import django_heroku
 import dj_database_url
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,21 +74,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mygame.wsgi.application'
 
-import dj_database_url
+# Retrieve the database URL from the environment variable
+# db_from_env = dj_database_url.config()
 
-import dj_database_url
-
-# Retrieve the database URL from Heroku app's configuration
-db_url = 'mysql://beb78b019ea51e:e2870294@us-cdbr-east-06.cleardb.net/heroku_1dc644cafa78380'
-
-# Parse the database URL
-db_config = dj_database_url.parse(db_url)
-
-# Update the 'default' database configuration
+# Update the 'default' database configuration with parsed values
 DATABASES = {
-    'default': db_config
+    'default': dj_database_url.config(default='postgres://localhost')
 }
 
+# Retrieve the database URL from Heroku app's configuration
+# db_url = 'postgres://root:@localhost:5432/visualnovel'
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'visualnovel',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -99,7 +107,6 @@ DATABASES = {
 #         'PASSWORD': '',
 #     }
 # }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -134,13 +141,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-import os
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
 django_heroku.settings(locals())
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
