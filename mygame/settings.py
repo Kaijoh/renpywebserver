@@ -77,7 +77,7 @@ import dj_database_url
 import dj_database_url
 
 # Retrieve the database URL from Heroku app's configuration
-db_url = 'mysql://beb78b019ea51e:e2870294@us-cdbr-east-06.cleardb.net/heroku_1dc644cafa78380?reconnect=true'
+db_url = 'mysql://beb78b019ea51e:e2870294@us-cdbr-east-06.cleardb.net/heroku_1dc644cafa78380'
 
 # Parse the database URL
 db_config = dj_database_url.parse(db_url)
@@ -86,6 +86,7 @@ db_config = dj_database_url.parse(db_url)
 DATABASES = {
     'default': db_config
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
