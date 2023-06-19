@@ -15,8 +15,8 @@
     
         .container-wrapper {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Updated */
+            gap: 20px; /* Updated */
             margin: 50px auto;
             max-width: 2000px;
         }
@@ -28,7 +28,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             padding: 20px;
             overflow: hidden;
-            margin: 0 30px 0 30px;
         }
     
         .container h1, .container h2 {
@@ -111,23 +110,24 @@
         .container table td.trophy-bronze i {
             color: #cd7f32;
         }
-
+    
         .share-buttons {
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin-top: 20px; /* Added */
         }
-        
+    
         .share-button {
             color: white;
             font-size: 24px;
             text-decoration: none;
         }
-        
+    
         .share-button i {
             transition: color 0.3s ease;
         }
-        
+    
         .share-button:hover i {
             color: gold;
         }
