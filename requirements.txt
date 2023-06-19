@@ -26,8 +26,6 @@ joblib==1.2.0
 json5==0.9.6
 jsonschema==4.4.0
 MarkupSafe==2.1.1
-mysqlclient==1.4.6
-pymysql==1.0.2
 nest-asyncio==1.5.4
 opencv-python==4.5.5.64
 packaging==21.3
