@@ -29,7 +29,7 @@ dj-database-url==2.0.0
 Django==4.1.5
 django-crispy-forms==2.0
 django-heroku==0.3.1
-dlib @ https://github.com/jloh02/dlib/releases/download/v19.22/dlib-19.22.99-cp310-cp310-win_amd64.whl
+# dlib @ https://github.com/jloh02/dlib/releases/download/v19.22/dlib-19.22.99-cp310-cp310-win_amd64.whl
 entrypoints==0.4
 et-xmlfile==1.1.0
 executing==0.8.3
