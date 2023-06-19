@@ -77,9 +77,12 @@ WSGI_APPLICATION = 'mygame.wsgi.application'
 # Retrieve the database URL from the environment variable
 # db_from_env = dj_database_url.config()
 
-# Update the 'default' database configuration with parsed values
+# Extract the database URL from the environment variable
+db_url = os.getenv('DATABASE_URL')
+
+# Configure the 'default' database using dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': dj_database_url.config(default=db_url)
 }
 
 # Retrieve the database URL from Heroku app's configuration
