@@ -72,18 +72,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mygame.wsgi.application'
 
+import dj_database_url
+
+import dj_database_url
+
+# Retrieve the database URL from Heroku app's configuration
+db_url = 'mysql://beb78b019ea51e:e2870294@us-cdbr-east-06.cleardb.net/heroku_1dc644cafa78380?reconnect=true'
+
+# Parse the database URL
+db_config = dj_database_url.parse(db_url)
+
+# Update the 'default' database configuration
+DATABASES = {
+    'default': db_config
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'visualnovel',
-        'USER': 'root',
-        'PASSWORD': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'visualnovel',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#     }
+# }
 
 
 # Password validation
