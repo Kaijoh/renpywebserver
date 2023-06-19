@@ -26,7 +26,6 @@ joblib==1.2.0
 json5==0.9.6
 jsonschema==4.4.0
 MarkupSafe==2.1.1
-mysql-connector==2.2.9
 mysql-connector-python==8.0.32
 pymysql==1.0.2
 nest-asyncio==1.5.4
@@ -41,10 +40,9 @@ pyarrow==10.0.1
 Pygments==2.11.2
 PyJWT==2.4.0
 Pympler==1.0.1
-PyMySQL==1.0.2
-pyparsing==3.0.7
 pyrsistent==0.18.1
-Renpy-Tools==0.0.3
+pyrsistent==0.18.1
+pyrsistent==0.18.1
 requests==2.29.0
 rich==12.6.0
 semver==2.13.0
