@@ -90,14 +90,14 @@ DATABASES = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'visualnovel',
-        'USER': 'root',
-        'PASSWORD': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'visualnovel',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#     }
+# }
 
 
 # Password validation
