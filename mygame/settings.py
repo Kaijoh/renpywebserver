@@ -78,7 +78,8 @@ WSGI_APPLICATION = 'mygame.wsgi.application'
 # db_from_env = dj_database_url.config()
 
 # Extract the database URL from the environment variable
-db_url = os.getenv('DATABASE_URL')
+# db_url = os.getenv('DATABASE_URL')
+db_url = 'postgres://fbwtnpfkhhkjdd:5768767fa4ce681ef606f7ba3c95c94751f2021edbfa3a07283b6f8da80c4048@ec2-44-213-151-75.compute-1.amazonaws.com:5432/d8m0hac1m5r32k'
 
 # Configure the 'default' database using dj_database_url
 DATABASES = {
