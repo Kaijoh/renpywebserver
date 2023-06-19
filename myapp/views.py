@@ -32,6 +32,27 @@ def submit_score(request):
     else:
         return HttpResponse(status=400)
     
+
+@csrf_exempt
+def score_board(request):
+    player_scores = {}
+    player_scores['easy'] = list(Score.objects.order_by('-player_score').values('player_name', 'player_score'))
+    player_scores['medium'] = list(Score2.objects.order_by('-player_score2').values('player_name', 'player_score2'))
+    player_scores['hard'] = list(Score3.objects.order_by('-player_score3').values('player_name', 'player_score3'))
+    context = {
+        'player_scores': player_scores
+    }
+    return render(request, 'score_board.html', context)
+
+
+
+
+
+
+
+
+
+
 # @csrf_exempt
 # def submit_score(request):
 #     if request.method == 'POST':
@@ -66,27 +87,6 @@ def submit_score(request):
 #         'player_score3': player_score3
 #     }
 #     return render(request, 'score_board.html', context)
-@csrf_exempt
-def score_board(request):
-    player_scores = {}
-    player_scores['easy'] = list(Score.objects.order_by('-player_score').values('player_name', 'player_score'))
-    player_scores['medium'] = list(Score2.objects.order_by('-player_score2').values('player_name', 'player_score2'))
-    player_scores['hard'] = list(Score3.objects.order_by('-player_score3').values('player_name', 'player_score3'))
-    context = {
-        'player_scores': player_scores
-    }
-    return render(request, 'score_board.html', context)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
